@@ -1,0 +1,6 @@
+[
+    {
+        "caption": "Extract CSS Values to LESS Variables",
+        "command": "prompt_extract_css_values_to_less_variables"
+    }
+]
