@@ -96,7 +96,9 @@ class ExtractCssValuesToLessVariablesCommand(sublime_plugin.TextCommand):
         for line in reversed(lines):
             # Here, we run a regex search on each line.
             # Note that we don't get the actual string until we pass in the region into `view.substr()`.
-            match = re.search(r"^(\s*)(.+)(\s*):(\s*)(.+)(\s*);(.*)$", self.view.substr(line))
+            # We exclude the `@` character from the value so that we don't act on already-existing
+            # variables.
+            match = re.search(r"^(\s*)(.+)(\s*):(\s*)([^@]+)(\s*);(.*)$", self.view.substr(line))
 
             if match:
                 # In Python, instead of using `\1` or `$1` to refer to the first regex captured group,
@@ -263,5 +265,3 @@ class ExtractCssValuesToLessVariablesCommand(sublime_plugin.TextCommand):
 
             # Finally, we insert this `variables_output` string of the list of variables to the top of the buffer (location 0).
             self.view.insert(edit, 0, variables_output)
-
-
